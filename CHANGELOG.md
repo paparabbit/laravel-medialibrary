@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-medialibrary` will be documented in this file
 
+Conversions will now be saved in the format
+
+name-conversion_name.jpg
+
+So make sure you set a name
+
 ## 6.6.3 - 2017-11-28
 
 - fix clearing entire media collection except a single media instance 

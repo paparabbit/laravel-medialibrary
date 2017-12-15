@@ -83,7 +83,9 @@ class FileManipulator
 
                 $conversionResult = $this->performConversion($media, $conversion, $copiedOriginalFile);
 
-                $newFileName = $conversion->getName()
+                $newFileName = $media->name
+                    .'-'
+                    . $conversion->getName()
                     .'.'
                     .$conversion->getResultExtension(pathinfo($copiedOriginalFile, PATHINFO_EXTENSION));
 
