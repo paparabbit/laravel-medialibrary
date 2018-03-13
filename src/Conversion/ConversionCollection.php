@@ -125,7 +125,7 @@ class ConversionCollection extends Collection
     /*
      * Get all the conversions in the collection that should be queued.
      */
-    public function getQueuedConversions(string $collectionName = ''): ConversionCollection
+    public function getQueuedConversions(string $collectionName = ''): self
     {
         return $this->getConversions($collectionName)->filter->shouldBeQueued();
     }
@@ -135,15 +135,19 @@ class ConversionCollection extends Collection
      */
     protected function addManipulationToConversion(Manipulations $manipulations, string $conversionName)
     {
-        $this->first(function (Conversion $conversion) use ($conversionName) {
+        optional($this->first(function (Conversion $conversion) use ($conversionName) {
             return $conversion->getName() === $conversionName;
-        })->addAsFirstManipulations($manipulations);
+        }))->addAsFirstManipulations($manipulations);
+
+        if ($conversionName === '*') {
+            $this->each->addAsFirstManipulations(clone $manipulations);
+        }
     }
 
     /*
      * Get all the conversions in the collection that should not be queued.
      */
-    public function getNonQueuedConversions(string $collectionName = ''): ConversionCollection
+    public function getNonQueuedConversions(string $collectionName = ''): self
     {
         return $this->getConversions($collectionName)->reject->shouldBeQueued();
     }
@@ -151,7 +155,7 @@ class ConversionCollection extends Collection
     /**
      * Return the list of conversion files.
      */
-    public function getConversionsFiles(string $collectionName = ''): ConversionCollection
+    public function getConversionsFiles(string $collectionName = ''): self
     {
         return $this->getConversions($collectionName)->map(function (Conversion $conversion) {
             return "{$conversion->getName()}.{$conversion->getResultExtension()}";

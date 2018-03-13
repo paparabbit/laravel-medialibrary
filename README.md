@@ -29,7 +29,7 @@ $newsItem->addMedia($smallFile)->toMediaCollection('downloads', 'local');
 $newsItem->addMedia($bigFile)->toMediaCollection('downloads', 's3');
 ```
 
-The storage of the files is handled by [Laravel's Filesystem](https://laravel.com/docs/5.4/filesystem),
+The storage of the files is handled by [Laravel's Filesystem](https://laravel.com/docs/5.6/filesystem),
 so you can use any filesystem you like. Additionally the package can create image manipulations
 on images and pdfs that have been added in the medialibrary.
 
@@ -39,7 +39,7 @@ Spatie is a webdesign agency in Antwerp, Belgium. You'll find an overview of all
 
 This version of the medialibrary is compatible with Laravel 5.5 and newer.
 
-If you use and older version of Laravel you can use an older version of the package. These aren't maintained anymore, but the should be pretty stable. We still accept small bugfixes.
+If you use and older version of Laravel you can use an older version of the package. These aren't maintained anymore, but they should be pretty stable. We still accept small bugfixes.
 
 - [Medialibrary v5 for Laravel 5.4](https://docs.spatie.be/laravel-medialibrary/v5)
 - [Medialibray v4 for Laravel 5.1 - 5.3](https://docs.spatie.be/laravel-medialibrary/v4)
@@ -214,6 +214,8 @@ By default medialibrary will store it's files on Laravel's `public` disk. If you
         'media' => [
             'driver' => 'local',
             'root'   => public_path().'/media',
+            'url' => env('APP_URL') . '/media',
+            'visibility' => 'public',
         ],
     ...
 ```
